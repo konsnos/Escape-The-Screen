@@ -31,6 +31,11 @@ namespace EscapeTheScreen
         private float speed = 100f;
         private float speedOther;
         private bool controlled;
+        public bool Controlled
+        {
+            get { return controlled; }
+            set { controlled = value; }
+        }
         private RectTransform selfT;
         #region LOOKING DIRECTIONS
         private Quaternion LOOKING_RIGHT_LEFT, LOOKING_UP, LOOKING_DOWN;
@@ -38,6 +43,11 @@ namespace EscapeTheScreen
         #endregion
 
         Vector3 newPos;
+
+        #region EVENTS
+        public delegate void Action();
+        public static event Action Completed;
+        #endregion
 
         void Awake()
         {
@@ -56,7 +66,6 @@ namespace EscapeTheScreen
         // Use this for initialization
         void Start()
         {
-            controlled = true;
             printedSprite = 0;
             currentSprite = 0;
             mouthTimePassed = 0f;
@@ -131,9 +140,47 @@ namespace EscapeTheScreen
             #endregion
         }
 
+        /// <summary>
+        /// Returns hero's rectangle.
+        /// </summary>
+        /// <returns></returns>
+        public Vector4 GetRect()
+        {
+            Vector3 pos = selfT.position;
+            Rect rect = selfT.rect;
+            return new Vector4(pos.x, pos.y, rect.width, rect.height);
+        }
+
+        public void ShowHide(bool show)
+        {
+            gameObject.SetActive(show);
+        }
+
+        public void SetInTheMiddle()
+        {
+            Vector2 newPos = selfT.anchoredPosition;
+            newPos.x = Main.WIDTH / 2f;
+            newPos.y = Main.HEIGHT / 2f;
+            selfT.anchoredPosition = newPos;
+        }
+
+        /// <summary>
+        /// Sets hero to the position given.
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        public void SetToPosition(float width, float height)
+        {
+            Vector2 newPos = selfT.anchoredPosition;
+            newPos.x = width;// -selfT.rect.width / 2f;
+            newPos.y = height;// -selfT.rect.height / 2f;
+            selfT.anchoredPosition = newPos;
+        }
+
         public void WalkAcrossScreen(float newSpeed, float height)
         {
-            controlled = false;
+            ShowHide(true);
+            Controlled = false;
             speedOther = newSpeed;
             Vector2 newPos = selfT.anchoredPosition;
             newPos.x = 0f - selfT.rect.width / 2f;
@@ -141,8 +188,6 @@ namespace EscapeTheScreen
             selfT.anchoredPosition = newPos;
             selfT.localScale = SCALE_RIGHT_UP_DOWN;
             selfT.rotation = LOOKING_RIGHT_LEFT;
-            //Debug.Log("Pacman pos: " + selfT.position + " local pos: " + selfT.anchoredPosition);
-            //UnityEditor.EditorApplication.isPaused = true;
             StartCoroutine("walkAcrossScreen");
         }
 
@@ -156,7 +201,8 @@ namespace EscapeTheScreen
                 yield return null;
             }
 
-            controlled = true;
+            if (Completed != null)
+                Completed();
         }
     }
 }

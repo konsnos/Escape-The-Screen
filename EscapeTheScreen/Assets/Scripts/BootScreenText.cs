@@ -35,7 +35,19 @@ namespace EscapeTheScreen
             }
             ready = true;
 
+            HeroController.Completed += BootCompleted;
             HeroController.StaticSelf.WalkAcrossScreen(200f,-380f);
+        }
+
+        /// <summary>
+        /// Hide boot. Show log in screen.
+        /// </summary>
+        private void BootCompleted()
+        {
+            HeroController.StaticSelf.ShowHide(false);
+            HeroController.Completed -= BootCompleted;
+            Main.StaticSelf.HideBootScreen();
+            Main.StaticSelf.ShowLogInScreen(true);
         }
     }
 }

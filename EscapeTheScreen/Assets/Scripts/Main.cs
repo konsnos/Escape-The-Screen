@@ -5,17 +5,22 @@ namespace EscapeTheScreen
 {
     public class Main : MonoBehaviour
     {
+        public static float WIDTH = 800f;
+        /// <summary>
+        /// 
+        /// <b>Negative height.</b>
+        /// </summary>
+        public static float HEIGHT = -600f;
 
-        // Use this for initialization
-        void Start()
+        public static Main StaticSelf;
+        [SerializeField]
+        private Sprite logInScreen;
+
+        void Awake()
         {
-
+            StaticSelf = this;
         }
 
-        // Update is called once per frame
-        void Update()
-        {
 
-        }
     }
 }

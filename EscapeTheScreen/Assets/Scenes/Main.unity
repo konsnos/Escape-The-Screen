@@ -371,7 +371,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &367464388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -436,7 +436,7 @@ MonoBehaviour:
     running away from those four ghosts!\r\nYou have to help me escape the screen!
     Please! Let me out! NOW!\r\n\r\nMove me around with the arrow keys,\r\nWhen on
     top of something press Enter to interact.  \r\n"
-  textSpeed: .00999999978
+  textSpeed: .0500000007
 --- !u!1 &402035149
 GameObject:
   m_ObjectHideFlags: 0
@@ -770,7 +770,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1514850824
 RectTransform:
   m_ObjectHideFlags: 0

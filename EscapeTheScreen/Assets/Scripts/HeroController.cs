@@ -114,8 +114,8 @@ namespace EscapeTheScreen
 
                 if (newPos.y + selfT.rect.height / 2f > 0f)
                     newPos.y = -selfT.rect.height / 2f;
-                else if (newPos.y - selfT.rect.height / 2f < Main.HEIGHT)
-                    newPos.y = Main.HEIGHT + selfT.rect.height / 2f;
+                else if (newPos.y - selfT.rect.height / 2f < Main.HEIGHT + 70)
+                    newPos.y = Main.HEIGHT + selfT.rect.height / 2f + 70;
                 #endregion
 
                 selfT.anchoredPosition = newPos;
@@ -144,11 +144,11 @@ namespace EscapeTheScreen
         /// Returns hero's rectangle.
         /// </summary>
         /// <returns></returns>
-        public Vector4 GetRect()
+        public SimpleRect GetRect()
         {
             Vector3 pos = selfT.position;
             Rect rect = selfT.rect;
-            return new Vector4(pos.x, pos.y, rect.width, rect.height);
+            return new SimpleRect(pos.x, pos.y, rect.width, rect.height);
         }
 
         public void ShowHide(bool show)

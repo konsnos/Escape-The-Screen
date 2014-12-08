@@ -114,8 +114,8 @@ namespace EscapeTheScreen
 
                 if (newPos.y + selfT.rect.height / 2f > 0f)
                     newPos.y = -selfT.rect.height / 2f;
-                else if (newPos.y - selfT.rect.height / 2f < Main.HEIGHT + 70)
-                    newPos.y = Main.HEIGHT + selfT.rect.height / 2f + 70;
+                else if (newPos.y - selfT.rect.height / 2f < Main.HEIGHT + 60)
+                    newPos.y = Main.HEIGHT + selfT.rect.height / 2f + 60;
                 #endregion
 
                 selfT.anchoredPosition = newPos;
@@ -153,6 +153,7 @@ namespace EscapeTheScreen
 
         public void ShowHide(bool show)
         {
+            StopCoroutine("walkAcrossScreen");
             gameObject.SetActive(show);
         }
 

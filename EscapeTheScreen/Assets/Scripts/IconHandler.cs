@@ -43,7 +43,14 @@ namespace EscapeTheScreen
         {
             if (Main.ActiveScreen == activeForWindow)
             {
-                if (Library.HeroInsideRect(HeroController.StaticSelf.GetRect(), selfRect))
+                bool isOver = false;
+
+                if(buttonId == BUTTONS.CLOSE)
+                    isOver = Library.RectanglesCollide(HeroController.StaticSelf.GetRect(), selfRect);
+                else
+                    isOver = Library.HeroInsideRect(HeroController.StaticSelf.GetRect(), selfRect);
+
+                if (isOver)
                 {
                     if (!selected.activeSelf)
                     {
@@ -59,6 +66,11 @@ namespace EscapeTheScreen
                         selectedBtn = BUTTONS.NONE;
                     }
                 }
+            }
+            else if(selected.activeSelf)
+            {
+                selected.SetActive(false);
+                selectedBtn = BUTTONS.NONE;
             }
         }
     }

@@ -15,12 +15,19 @@ namespace EscapeTheScreen
         public static float HEIGHT = -600f;
 
         public static Main StaticSelf;
+
+        #region SCREENS
+
         [SerializeField]
         private GameObject logInScreen;
         [SerializeField]
         private GameObject DesktopScreen;
         [SerializeField]
         private GameObject bootText;
+        [SerializeField]
+        private GameObject RecycleBinScreen;
+
+        #endregion
 
         #region LOG IN SCREEN VARS
 
@@ -94,6 +101,33 @@ namespace EscapeTheScreen
                     break;
                 default:
                     break;
+            }
+
+            if(Input.GetKeyUp(KeyCode.Return) || Input.GetKeyUp(KeyCode.KeypadEnter) || Input.GetKeyUp(KeyCode.Space))
+            {
+                switch(activeScreen)
+                {
+                    case SCREEN_STATES.DESKTOP_SCREEN:
+                        switch (IconHandler.selectedBtn)
+                        {
+                            case BUTTONS.RECYBLE_BIN:
+                                RecycleBinScreen.SetActive(true);
+                                activeScreen = SCREEN_STATES.RECYCLE_BIN_SCREEN;
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    case SCREEN_STATES.RECYCLE_BIN_SCREEN:
+                        if (IconHandler.selectedBtn == BUTTONS.CLOSE)
+                        {
+                            RecycleBinScreen.SetActive(false);
+                            activeScreen = SCREEN_STATES.DESKTOP_SCREEN;
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 

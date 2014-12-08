@@ -80,26 +80,26 @@ namespace EscapeTheScreen
 
                 #region MOVEMENT
                 /// Vertical movement
-                if (Input.GetKey(KeyCode.W))
+                if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
                 {
                     selfT.localScale = SCALE_RIGHT_UP_DOWN;
                     selfT.rotation = LOOKING_UP;
                     newPos.y += Time.deltaTime * speed;
                 }
-                else if (Input.GetKey(KeyCode.S))
+                else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
                 {
                     selfT.localScale = SCALE_RIGHT_UP_DOWN;
                     selfT.rotation = LOOKING_DOWN;
                     newPos.y -= Time.deltaTime * speed;
                 }
                 /// Horizontal movement
-                if (Input.GetKey(KeyCode.A))
+                if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
                 {
                     selfT.localScale = SCALE_LEFT;
                     selfT.rotation = LOOKING_RIGHT_LEFT;
                     newPos.x -= Time.deltaTime * speed;
                 }
-                else if (Input.GetKey(KeyCode.D))
+                else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
                 {
                     selfT.localScale = SCALE_RIGHT_UP_DOWN;
                     selfT.rotation = LOOKING_RIGHT_LEFT;
@@ -172,8 +172,8 @@ namespace EscapeTheScreen
         public void SetToPosition(float width, float height)
         {
             Vector2 newPos = selfT.anchoredPosition;
-            newPos.x = width;// -selfT.rect.width / 2f;
-            newPos.y = height;// -selfT.rect.height / 2f;
+            newPos.x = width;
+            newPos.y = height;
             selfT.anchoredPosition = newPos;
         }
 

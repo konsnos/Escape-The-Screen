@@ -80,26 +80,26 @@ namespace EscapeTheScreen
 
                 #region MOVEMENT
                 /// Vertical movement
-                if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+                if (Input.GetKey(KeyCode.UpArrow))
                 {
                     selfT.localScale = SCALE_RIGHT_UP_DOWN;
                     selfT.rotation = LOOKING_UP;
                     newPos.y += Time.deltaTime * speed;
                 }
-                else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+                else if (Input.GetKey(KeyCode.DownArrow))
                 {
                     selfT.localScale = SCALE_RIGHT_UP_DOWN;
                     selfT.rotation = LOOKING_DOWN;
                     newPos.y -= Time.deltaTime * speed;
                 }
                 /// Horizontal movement
-                if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+                if (Input.GetKey(KeyCode.LeftArrow))
                 {
                     selfT.localScale = SCALE_LEFT;
                     selfT.rotation = LOOKING_RIGHT_LEFT;
                     newPos.x -= Time.deltaTime * speed;
                 }
-                else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+                else if (Input.GetKey(KeyCode.RightArrow))
                 {
                     selfT.localScale = SCALE_RIGHT_UP_DOWN;
                     selfT.rotation = LOOKING_RIGHT_LEFT;

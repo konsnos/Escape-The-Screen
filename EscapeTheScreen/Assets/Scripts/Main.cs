@@ -25,7 +25,9 @@ namespace EscapeTheScreen
         [SerializeField]
         private GameObject bootText;
         [SerializeField]
-        private GameObject RecycleBinScreen;
+        private GameObject RecycleBinWindow;
+        [SerializeField]
+        private GameObject UnsortedWindow;
 
         #endregion
 
@@ -55,7 +57,7 @@ namespace EscapeTheScreen
 
         void Start()
         {
-            activeScreen = SCREEN_STATES.BOOT_SCREEN;
+            activeScreen = SCREEN_STATES.BOOT;
             HeroController.StaticSelf.ShowHide(false);
             ShowDesktopScreen(true);
         }
@@ -69,7 +71,7 @@ namespace EscapeTheScreen
         {
             if (show)
             {
-                activeScreen = SCREEN_STATES.LOG_IN_SCREEN;
+                activeScreen = SCREEN_STATES.LOG_IN;
                 logInScreen.SetActive(true);
                 HeroController.StaticSelf.Controlled = true;
                 HeroController.StaticSelf.ShowHide(true);
@@ -85,7 +87,7 @@ namespace EscapeTheScreen
         {
             if(show)
             {
-                activeScreen = SCREEN_STATES.DESKTOP_SCREEN;
+                activeScreen = SCREEN_STATES.DESKTOP;
                 DesktopScreen.SetActive(true);
                 HeroController.StaticSelf.Controlled = true;
                 HeroController.StaticSelf.ShowHide(true);
@@ -96,7 +98,7 @@ namespace EscapeTheScreen
         {
             switch(activeScreen)
             {
-                case SCREEN_STATES.LOG_IN_SCREEN:
+                case SCREEN_STATES.LOG_IN:
                     checkLogInScreenInput();
                     break;
                 default:
@@ -107,22 +109,39 @@ namespace EscapeTheScreen
             {
                 switch(activeScreen)
                 {
-                    case SCREEN_STATES.DESKTOP_SCREEN:
+                    case SCREEN_STATES.DESKTOP:
                         switch (IconHandler.selectedBtn)
                         {
                             case BUTTONS.RECYBLE_BIN:
-                                RecycleBinScreen.SetActive(true);
-                                activeScreen = SCREEN_STATES.RECYCLE_BIN_SCREEN;
+                                RecycleBinWindow.SetActive(true);
+                                activeScreen = SCREEN_STATES.RECYCLE_BIN;
                                 break;
                             default:
                                 break;
                         }
                         break;
-                    case SCREEN_STATES.RECYCLE_BIN_SCREEN:
+                    case SCREEN_STATES.RECYCLE_BIN:
                         if (IconHandler.selectedBtn == BUTTONS.CLOSE)
                         {
-                            RecycleBinScreen.SetActive(false);
-                            activeScreen = SCREEN_STATES.DESKTOP_SCREEN;
+                            RecycleBinWindow.SetActive(false);
+                            activeScreen = SCREEN_STATES.DESKTOP;
+                        }
+                        break;
+                    case SCREEN_STATES.UNSORTED:
+                        switch(IconHandler.selectedBtn)
+                        {
+                            case BUTTONS.DRIVERS:
+                                break;
+                            case BUTTONS.COMPUTER_SCIENCE_DOC:
+                                break;
+                            case BUTTONS.ME_N_BABE:
+                                break;
+                            case BUTTONS.PACMAN_DOC:
+                                break;
+                            case BUTTONS.README_TXT:
+                                break;
+                            default:
+                                break;
                         }
                         break;
                     default:

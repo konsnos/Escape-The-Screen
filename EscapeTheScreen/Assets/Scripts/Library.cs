@@ -31,12 +31,12 @@ namespace EscapeTheScreen
     /// <summary>
     /// Screens the game can be.
     /// </summary>
-    public enum SCREEN_STATES { BOOT_SCREEN, LOG_IN_SCREEN, DESKTOP_SCREEN, RECYCLE_BIN_SCREEN };
+    public enum SCREEN_STATES { BOOT, LOG_IN, DESKTOP, RECYCLE_BIN, UNSORTED, DRIVERS, COMP_SCIENCE, ME_N_BABE, PACKMAN_DOC, README_DOC };
 
     /// <summary>
     /// Buttons ids.
     /// </summary>
-    public enum BUTTONS { NONE, RECYBLE_BIN, USER, UNSORTED, CLOSE };
+    public enum BUTTONS { NONE, RECYBLE_BIN, USER, UNSORTED, CLOSE, DRIVERS, COMPUTER_SCIENCE_DOC, ME_N_BABE, PACMAN_DOC, README_TXT };
 
     public struct SimpleRect
     {

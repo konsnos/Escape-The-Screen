@@ -28,8 +28,25 @@ namespace EscapeTheScreen
         private GameObject RecycleBinWindow;
         [SerializeField]
         private GameObject UnsortedWindow;
+        [SerializeField]
+        private GameObject DriversWindow;
+        [SerializeField]
+        private GameObject DriverInstalled;
+        [SerializeField]
+        private GameObject CompScienceWindow;
+        [SerializeField]
+        private GameObject Me_n_babeWindow;
+        [SerializeField]
+        private GameObject PacMan_Window;
+        [SerializeField]
+        private GameObject ReadMe_Window;
 
         #endregion
+
+        /// <summary>
+        /// If true then printer is installed.
+        /// </summary>
+        public bool printerInstalled;
 
         #region LOG IN SCREEN VARS
 
@@ -58,6 +75,7 @@ namespace EscapeTheScreen
         void Start()
         {
             activeScreen = SCREEN_STATES.BOOT;
+            printerInstalled = false;
             HeroController.StaticSelf.ShowHide(false);
             ShowDesktopScreen(true);
         }
@@ -105,16 +123,25 @@ namespace EscapeTheScreen
                     break;
             }
 
-            if(Input.GetKeyUp(KeyCode.Return) || Input.GetKeyUp(KeyCode.KeypadEnter) || Input.GetKeyUp(KeyCode.Space))
+            checkIconButtonClick();
+        }
+
+        private void checkIconButtonClick()
+        {
+            if (Input.GetKeyUp(KeyCode.Return) || Input.GetKeyUp(KeyCode.KeypadEnter) || Input.GetKeyUp(KeyCode.Space))
             {
-                switch(activeScreen)
+                switch (activeScreen)
                 {
                     case SCREEN_STATES.DESKTOP:
                         switch (IconHandler.selectedBtn)
                         {
                             case BUTTONS.RECYBLE_BIN:
-                                RecycleBinWindow.SetActive(true);
                                 activeScreen = SCREEN_STATES.RECYCLE_BIN;
+                                RecycleBinWindow.SetActive(true);
+                                break;
+                            case BUTTONS.UNSORTED:
+                                activeScreen = SCREEN_STATES.UNSORTED;
+                                UnsortedWindow.SetActive(true);
                                 break;
                             default:
                                 break;
@@ -128,20 +155,78 @@ namespace EscapeTheScreen
                         }
                         break;
                     case SCREEN_STATES.UNSORTED:
-                        switch(IconHandler.selectedBtn)
+                        switch (IconHandler.selectedBtn)
                         {
                             case BUTTONS.DRIVERS:
+                                activeScreen = SCREEN_STATES.DRIVERS;
+                                DriversWindow.SetActive(true);
                                 break;
                             case BUTTONS.COMPUTER_SCIENCE_DOC:
+                                activeScreen = SCREEN_STATES.COMP_SCIENCE;
+                                CompScienceWindow.SetActive(true);
                                 break;
                             case BUTTONS.ME_N_BABE:
+                                activeScreen = SCREEN_STATES.ME_N_BABE;
+                                Me_n_babeWindow.SetActive(true);
                                 break;
                             case BUTTONS.PACMAN_DOC:
+                                activeScreen = SCREEN_STATES.PACKMAN_DOC;
+                                PacMan_Window.SetActive(true);
                                 break;
                             case BUTTONS.README_TXT:
+                                activeScreen = SCREEN_STATES.README_DOC;
+                                ReadMe_Window.SetActive(true);
+                                break;
+                            case BUTTONS.CLOSE:
+                                activeScreen = SCREEN_STATES.DESKTOP;
+                                UnsortedWindow.SetActive(false);
                                 break;
                             default:
                                 break;
+                        }
+                        break;
+                    case SCREEN_STATES.DRIVERS:
+                        switch(IconHandler.selectedBtn)
+                        {
+                            case BUTTONS.DRIVER_CAMERA:
+                                activeScreen = SCREEN_STATES.DRIVER_INSTALLED;
+                                DriverInstalled.SetActive(true);
+                                break;
+                            case BUTTONS.DRIVER_GPU:
+                                activeScreen = SCREEN_STATES.DRIVER_INSTALLED;
+                                DriverInstalled.SetActive(true);
+                                break;
+                            case BUTTONS.DRIVER_PRINTER:
+                                printerInstalled = true;
+                                activeScreen = SCREEN_STATES.DRIVER_INSTALLED;
+                                DriverInstalled.SetActive(true);
+                                break;
+                            case BUTTONS.CLOSE:
+                                activeScreen = SCREEN_STATES.UNSORTED;
+                                DriversWindow.SetActive(false);
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    case SCREEN_STATES.DRIVER_INSTALLED:
+                        if(IconHandler.selectedBtn == BUTTONS.CLOSE)
+                        {
+                            activeScreen = SCREEN_STATES.DRIVERS;
+                            DriverInstalled.SetActive(false);
+                        }
+                        break;
+                    case SCREEN_STATES.COMP_SCIENCE:
+                    case SCREEN_STATES.ME_N_BABE:
+                    case SCREEN_STATES.PACKMAN_DOC:
+                    case SCREEN_STATES.README_DOC:
+                        if (IconHandler.selectedBtn == BUTTONS.CLOSE)
+                        {
+                            activeScreen = SCREEN_STATES.UNSORTED;
+                            CompScienceWindow.SetActive(false);
+                            Me_n_babeWindow.SetActive(false);
+                            PacMan_Window.SetActive(false);
+                            ReadMe_Window.SetActive(false);
                         }
                         break;
                     default:

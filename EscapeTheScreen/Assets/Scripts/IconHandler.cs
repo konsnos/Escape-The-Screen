@@ -45,7 +45,7 @@ namespace EscapeTheScreen
             {
                 bool isOver = false;
 
-                if(buttonId == BUTTONS.CLOSE)
+                if(buttonId == BUTTONS.CLOSE || buttonId == BUTTONS.HINT)
                     isOver = Library.RectanglesCollide(HeroController.StaticSelf.GetRect(), selfRect);
                 else
                     isOver = Library.HeroInsideRect(HeroController.StaticSelf.GetRect(), selfRect);

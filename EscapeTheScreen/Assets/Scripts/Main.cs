@@ -42,6 +42,14 @@ namespace EscapeTheScreen
         private GameObject ReadMe_Window;
         [SerializeField]
         private GameObject Pass_Window;
+        [SerializeField]
+        private GameObject Window_User;
+        [SerializeField]
+        private GameObject Window_Myself;
+        [SerializeField]
+        private GameObject Window_PrinterNotInstalled;
+        [SerializeField]
+        private GameObject Window_PrintPicture;
 
         #endregion
 
@@ -50,6 +58,11 @@ namespace EscapeTheScreen
         /// </summary>
         [HideInInspector]
         public bool printerInstalled;
+        /// <summary>
+        /// True when user has entered the correct password for the folder User.
+        /// </summary>
+        [HideInInspector]
+        private bool passwordGiven;
 
         #region LOG IN SCREEN VARS
 
@@ -87,6 +100,7 @@ namespace EscapeTheScreen
         {
             activeScreen = SCREEN_STATES.BOOT;
             printerInstalled = false;
+            passwordGiven = false;
             HeroController.StaticSelf.ShowHide(false);
             ShowDesktopScreen(true);
         }
@@ -158,9 +172,17 @@ namespace EscapeTheScreen
                                 UnsortedWindow.SetActive(true);
                                 break;
                             case BUTTONS.USER:
-                                activeScreen = SCREEN_STATES.USER_PASSWORD;
-                                Pass_Window.SetActive(true);
-                                UserPassText.text = "";
+                                if(passwordGiven)
+                                {
+                                    activeScreen = SCREEN_STATES.USER_FOLDER;
+                                    Window_User.SetActive(true);
+                                }
+                                else
+                                {
+                                    activeScreen = SCREEN_STATES.USER_PASSWORD;
+                                    Pass_Window.SetActive(true);
+                                    UserPassText.text = "";
+                                }
                                 break;
                             default:
                                 break;
@@ -266,6 +288,66 @@ namespace EscapeTheScreen
                             checkUserPassInput(true);
                         }
                         break;
+                    case SCREEN_STATES.USER_FOLDER:
+                        switch(IconHandler.selectedBtn)
+                        {
+                            case BUTTONS.CLOSE:
+                                activeScreen = SCREEN_STATES.DESKTOP;
+                                Window_User.SetActive(false);
+                                break;
+                            case BUTTONS.MYSELF:
+                                activeScreen = SCREEN_STATES.MYSELF_OPEN;
+                                Window_Myself.SetActive(true);
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    case SCREEN_STATES.MYSELF_OPEN:
+                        switch(IconHandler.selectedBtn)
+                        {
+                            case BUTTONS.CLOSE:
+                                activeScreen = SCREEN_STATES.USER_FOLDER;
+                                Window_Myself.SetActive(false);
+                                break;
+                            case BUTTONS.PRINT:
+                                if (printerInstalled)
+                                {
+                                    activeScreen = SCREEN_STATES.PICTURE_OPEN;
+                                    Window_PrintPicture.SetActive(true);
+                                }
+                                else
+                                {
+                                    activeScreen = SCREEN_STATES.PRINTER_NOT_INSTALLED;
+                                    Window_PrinterNotInstalled.SetActive(true);
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    case SCREEN_STATES.PRINTER_NOT_INSTALLED:
+                        if(IconHandler.selectedBtn == BUTTONS.CLOSE)
+                        {
+                            activeScreen = SCREEN_STATES.MYSELF_OPEN;
+                            Window_PrinterNotInstalled.SetActive(false);
+                        }
+                        break;
+                    case SCREEN_STATES.PICTURE_OPEN:
+                        switch(IconHandler.selectedBtn)
+                        {
+                            case BUTTONS.CLOSE:
+                                activeScreen = SCREEN_STATES.MYSELF_OPEN;
+                                Window_PrintPicture.SetActive(false);
+                                break;
+                            case BUTTONS.PRINT_PICTURE:
+                                activeScreen = SCREEN_STATES.WON;
+                                Application.OpenURL("http://webexperiments.gr/escapethescreen/won.html");
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -295,7 +377,11 @@ namespace EscapeTheScreen
                 if (UserPassText.text == userPassword)
                 {
                     UserPassHint.SetActive(false);
-                    Debug.Log("Correct password");
+
+                    passwordGiven = true;
+                    activeScreen = SCREEN_STATES.USER_FOLDER;
+                    Pass_Window.SetActive(false);
+                    Window_User.SetActive(true);
                 }
                 else
                 {

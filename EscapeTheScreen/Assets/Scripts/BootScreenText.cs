@@ -36,7 +36,6 @@ namespace EscapeTheScreen
             }
             clickToContinue = true;
 
-            //HeroController.Completed += BootCompleted;
             HeroController.StaticSelf.WalkAcrossScreen(200f,-380f);
         }
 

@@ -110,7 +110,7 @@ MonoBehaviour:
   - {fileID: 21300004, guid: adfa02359a7854043bd2809e6cdbaea3, type: 3}
   - {fileID: 21300006, guid: adfa02359a7854043bd2809e6cdbaea3, type: 3}
   mouthMoveTimeSpan: .100000001
-  speed: 100
+  speed: 150
 --- !u!114 &20638670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2879,7 +2879,7 @@ MonoBehaviour:
   Window_PrinterNotInstalled: {fileID: 1464761839}
   Window_PrintPicture: {fileID: 2139283619}
   printerInstalled: 0
-  inputText: {fileID: 1785392921}
+  logInInput: {fileID: 673384041}
   enterBtn: {fileID: 89613338}
   LogInHintObj: {fileID: 347256381}
   logInPassword: YELLOW
@@ -2892,7 +2892,7 @@ MonoBehaviour:
   - MMMM
   - SSBP
   - BPIC
-  UserPassText: {fileID: 251819124}
+  UserPassInput: {fileID: 2135415898}
   UserPassHint: {fileID: 2053979130}
   WonSnd: {fileID: 1049266361}
   OpenSmthSnd: {fileID: 458169280}
@@ -6336,7 +6336,6 @@ MonoBehaviour:
   m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Priority: 3
   ignoreReversedGraphics: 1
   blockingObjects: 0
   m_BlockingMask:
@@ -6658,7 +6657,7 @@ GameObject:
   - 114: {fileID: 2135415899}
   - 114: {fileID: 2135415898}
   m_Layer: 5
-  m_Name: InputField
+  m_Name: Password - Input Field
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6727,7 +6726,7 @@ MonoBehaviour:
   m_LineType: 0
   m_HideMobileInput: 0
   m_CharacterValidation: 0
-  m_CharacterLimit: 0
+  m_CharacterLimit: 4
   m_EndEdit:
     m_PersistentCalls:
       m_Calls: []

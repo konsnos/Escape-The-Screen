@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using EscapeTheScreen;
 using System.Collections;
 
@@ -64,30 +65,26 @@ namespace EscapeTheScreen
         [HideInInspector]
         private bool passwordGiven;
 
-        #region LOG IN SCREEN VARS
-
         [SerializeField]
-        private Text inputText;
+        private InputField logInInput;
         [SerializeField]
         private RectTransform enterBtn;
         [SerializeField]
         private GameObject LogInHintObj;
         [SerializeField]
-        private string logInPassword = "yellow";
+        private string logInPassword = "YELLOW";
         [SerializeField]
         private string userPassword = "PICB";
         [SerializeField]
         private string[] hintPasswords = { "OMKO", "CAFS", "APAG", "URSC", "MMMM", "SSBP", "BPIC" };
         [SerializeField]
-        private Text UserPassText;
+        private InputField UserPassInput;
         [SerializeField]
         private GameObject UserPassHint;
         [SerializeField]
         private AudioSource WonSnd;
         [SerializeField]
         private AudioSource OpenSmthSnd;
-
-        #endregion
 
         /// <summary>
         /// Current screen the game is in.
@@ -106,6 +103,7 @@ namespace EscapeTheScreen
             printerInstalled = false;
             passwordGiven = false;
             HeroController.StaticSelf.ShowHide(false);
+            //ShowLogInScreen(true);
             //ShowDesktopScreen(true);
         }
 
@@ -146,9 +144,11 @@ namespace EscapeTheScreen
             switch(activeScreen)
             {
                 case SCREEN_STATES.LOG_IN:
+                    EventSystem.current.SetSelectedGameObject(logInInput.gameObject, null);
                     checkLogInScreenInput();
                     break;
                 case SCREEN_STATES.USER_PASSWORD:
+                    EventSystem.current.SetSelectedGameObject(UserPassInput.gameObject, null);
                     checkUserPassInput(false);
                     break;
                 default:
@@ -189,7 +189,7 @@ namespace EscapeTheScreen
                                     activeScreen = SCREEN_STATES.USER_PASSWORD;
                                     Pass_Window.SetActive(true);
                                     OpenSmthSnd.Play();
-                                    UserPassText.text = "";
+                                    UserPassInput.text = "";
                                 }
                                 break;
                             default:
@@ -394,10 +394,12 @@ namespace EscapeTheScreen
 
         private void checkLogInScreenInput()
         {
-            inputText.text = inputText.text.ToUpper();
+            //Debug.Log(logInInputText.text.ToUpper());
+            //logInInputText.text = logInInputText.text.ToUpper();
+            logInInput.text = logInInput.text.ToUpper();
             if(Input.GetKeyUp(KeyCode.Return) || Input.GetKeyUp(KeyCode.KeypadEnter))
             {
-                if (inputText.text == logInPassword)
+                if (logInInput.text == logInPassword)
                 {
                     ShowLogInScreen(false);
                     ShowDesktopScreen(true);
@@ -409,11 +411,11 @@ namespace EscapeTheScreen
 
         private void checkUserPassInput(bool check)
         {
-            UserPassText.text = UserPassText.text.ToUpper();
+            UserPassInput.text = UserPassInput.text.ToUpper();
 
             if (Input.GetKeyUp(KeyCode.Return) || Input.GetKeyUp(KeyCode.KeypadEnter) || check)
             {
-                if (UserPassText.text == userPassword)
+                if (UserPassInput.text == userPassword)
                 {
                     UserPassHint.SetActive(false);
 
@@ -428,7 +430,7 @@ namespace EscapeTheScreen
                     bool showHint = false;
                     for(byte i = 0;i<hintPasswords.Length;i++)
                     {
-                        if (UserPassText.text == hintPasswords[i])
+                        if (UserPassInput.text == hintPasswords[i])
                         {
                             showHint = true;
                             break;
@@ -438,9 +440,6 @@ namespace EscapeTheScreen
                     UserPassHint.SetActive(showHint);
                 }
             }
-
-            if (UserPassText.text.Length > 4)
-                UserPassText.text = UserPassText.text.Substring(0, 4);
         }
     }
 }

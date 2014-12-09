@@ -28,7 +28,7 @@ namespace EscapeTheScreen
         /// Movement speed.
         /// </summary>
         [SerializeField]
-        private float speed = 100f;
+        private float speed = 150f;
         private float speedOther;
         private bool controlled;
         public bool Controlled
@@ -45,11 +45,6 @@ namespace EscapeTheScreen
         private bool isMoving;
 
         Vector3 newPos;
-
-        #region EVENTS
-        public delegate void Action();
-        public static event Action Completed;
-        #endregion
 
         void Awake()
         {
@@ -225,9 +220,6 @@ namespace EscapeTheScreen
                 selfT.anchoredPosition = newPos;
                 yield return null;
             }
-
-            if (Completed != null)
-                Completed();
         }
     }
 }

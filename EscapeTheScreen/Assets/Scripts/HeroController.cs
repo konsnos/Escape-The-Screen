@@ -41,6 +41,8 @@ namespace EscapeTheScreen
         private Quaternion LOOKING_RIGHT_LEFT, LOOKING_UP, LOOKING_DOWN;
         private Vector3 SCALE_RIGHT_UP_DOWN, SCALE_LEFT;
         #endregion
+        private AudioSource moveSnd;
+        private bool isMoving;
 
         Vector3 newPos;
 
@@ -61,6 +63,8 @@ namespace EscapeTheScreen
 
             SCALE_RIGHT_UP_DOWN = Vector3.one;
             SCALE_LEFT = new Vector3(-1f, 1f, 1f);
+
+            moveSnd = GetComponent<AudioSource>();
         }
 
         // Use this for initialization
@@ -69,6 +73,7 @@ namespace EscapeTheScreen
             printedSprite = 0;
             currentSprite = 0;
             mouthTimePassed = 0f;
+            isMoving = false;
         }
 
         // Update is called once per frame
@@ -78,6 +83,8 @@ namespace EscapeTheScreen
             {
                 newPos = selfT.anchoredPosition;
 
+                bool newIsMoving = false;
+
                 #region MOVEMENT
                 /// Vertical movement
                 if (Input.GetKey(KeyCode.UpArrow))
@@ -85,12 +92,14 @@ namespace EscapeTheScreen
                     selfT.localScale = SCALE_RIGHT_UP_DOWN;
                     selfT.rotation = LOOKING_UP;
                     newPos.y += Time.deltaTime * speed;
+                    newIsMoving = true;
                 }
                 else if (Input.GetKey(KeyCode.DownArrow))
                 {
                     selfT.localScale = SCALE_RIGHT_UP_DOWN;
                     selfT.rotation = LOOKING_DOWN;
                     newPos.y -= Time.deltaTime * speed;
+                    newIsMoving = true;
                 }
                 /// Horizontal movement
                 if (Input.GetKey(KeyCode.LeftArrow))
@@ -98,12 +107,27 @@ namespace EscapeTheScreen
                     selfT.localScale = SCALE_LEFT;
                     selfT.rotation = LOOKING_RIGHT_LEFT;
                     newPos.x -= Time.deltaTime * speed;
+                    newIsMoving = true;
                 }
                 else if (Input.GetKey(KeyCode.RightArrow))
                 {
                     selfT.localScale = SCALE_RIGHT_UP_DOWN;
                     selfT.rotation = LOOKING_RIGHT_LEFT;
                     newPos.x += Time.deltaTime * speed;
+                    newIsMoving = true;
+                }
+
+                if(isMoving != newIsMoving)
+                {
+                    isMoving = newIsMoving;
+                    if(isMoving)
+                    {
+                        moveSnd.Play();
+                    }
+                    else
+                    {
+                        moveSnd.Stop();
+                    }
                 }
 
                 #region KEEP INSIDE SCREEN
@@ -114,8 +138,8 @@ namespace EscapeTheScreen
 
                 if (newPos.y + selfT.rect.height / 2f > 0f)
                     newPos.y = -selfT.rect.height / 2f;
-                else if (newPos.y - selfT.rect.height / 2f < Main.HEIGHT + 60)
-                    newPos.y = Main.HEIGHT + selfT.rect.height / 2f + 60;
+                else if (newPos.y - selfT.rect.height / 2f < Main.HEIGHT + 40)
+                    newPos.y = Main.HEIGHT + selfT.rect.height / 2f + 40;
                 #endregion
 
                 selfT.anchoredPosition = newPos;

@@ -82,6 +82,10 @@ namespace EscapeTheScreen
         private Text UserPassText;
         [SerializeField]
         private GameObject UserPassHint;
+        [SerializeField]
+        private AudioSource WonSnd;
+        [SerializeField]
+        private AudioSource OpenSmthSnd;
 
         #endregion
 
@@ -102,7 +106,7 @@ namespace EscapeTheScreen
             printerInstalled = false;
             passwordGiven = false;
             HeroController.StaticSelf.ShowHide(false);
-            ShowDesktopScreen(true);
+            //ShowDesktopScreen(true);
         }
 
         public void HideBootScreen()
@@ -166,21 +170,25 @@ namespace EscapeTheScreen
                             case BUTTONS.RECYBLE_BIN:
                                 activeScreen = SCREEN_STATES.RECYCLE_BIN;
                                 RecycleBinWindow.SetActive(true);
+                                OpenSmthSnd.Play();
                                 break;
                             case BUTTONS.UNSORTED:
                                 activeScreen = SCREEN_STATES.UNSORTED;
                                 UnsortedWindow.SetActive(true);
+                                OpenSmthSnd.Play();
                                 break;
                             case BUTTONS.USER:
                                 if(passwordGiven)
                                 {
                                     activeScreen = SCREEN_STATES.USER_FOLDER;
                                     Window_User.SetActive(true);
+                                    OpenSmthSnd.Play();
                                 }
                                 else
                                 {
                                     activeScreen = SCREEN_STATES.USER_PASSWORD;
                                     Pass_Window.SetActive(true);
+                                    OpenSmthSnd.Play();
                                     UserPassText.text = "";
                                 }
                                 break;
@@ -192,6 +200,7 @@ namespace EscapeTheScreen
                         if (IconHandler.selectedBtn == BUTTONS.CLOSE)
                         {
                             RecycleBinWindow.SetActive(false);
+                            OpenSmthSnd.Play();
                             activeScreen = SCREEN_STATES.DESKTOP;
                         }
                         break;
@@ -201,26 +210,32 @@ namespace EscapeTheScreen
                             case BUTTONS.DRIVERS:
                                 activeScreen = SCREEN_STATES.DRIVERS;
                                 DriversWindow.SetActive(true);
+                                OpenSmthSnd.Play();
                                 break;
                             case BUTTONS.COMPUTER_SCIENCE_DOC:
                                 activeScreen = SCREEN_STATES.COMP_SCIENCE;
                                 CompScienceWindow.SetActive(true);
+                                OpenSmthSnd.Play();
                                 break;
                             case BUTTONS.ME_N_BABE:
                                 activeScreen = SCREEN_STATES.ME_N_BABE;
                                 Me_n_babeWindow.SetActive(true);
+                                OpenSmthSnd.Play();
                                 break;
                             case BUTTONS.PACMAN_DOC:
                                 activeScreen = SCREEN_STATES.PACKMAN_DOC;
                                 PacMan_Window.SetActive(true);
+                                OpenSmthSnd.Play();
                                 break;
                             case BUTTONS.README_TXT:
                                 activeScreen = SCREEN_STATES.README_DOC;
                                 ReadMe_Window.SetActive(true);
+                                OpenSmthSnd.Play();
                                 break;
                             case BUTTONS.CLOSE:
                                 activeScreen = SCREEN_STATES.DESKTOP;
                                 UnsortedWindow.SetActive(false);
+                                OpenSmthSnd.Play();
                                 break;
                             default:
                                 break;
@@ -232,19 +247,23 @@ namespace EscapeTheScreen
                             case BUTTONS.DRIVER_CAMERA:
                                 activeScreen = SCREEN_STATES.DRIVER_INSTALLED;
                                 DriverInstalled.SetActive(true);
+                                OpenSmthSnd.Play();
                                 break;
                             case BUTTONS.DRIVER_GPU:
                                 activeScreen = SCREEN_STATES.DRIVER_INSTALLED;
                                 DriverInstalled.SetActive(true);
+                                OpenSmthSnd.Play();
                                 break;
                             case BUTTONS.DRIVER_PRINTER:
                                 printerInstalled = true;
                                 activeScreen = SCREEN_STATES.DRIVER_INSTALLED;
                                 DriverInstalled.SetActive(true);
+                                OpenSmthSnd.Play();
                                 break;
                             case BUTTONS.CLOSE:
                                 activeScreen = SCREEN_STATES.UNSORTED;
                                 DriversWindow.SetActive(false);
+                                OpenSmthSnd.Play();
                                 break;
                             default:
                                 break;
@@ -255,6 +274,7 @@ namespace EscapeTheScreen
                         {
                             activeScreen = SCREEN_STATES.DRIVERS;
                             DriverInstalled.SetActive(false);
+                            OpenSmthSnd.Play();
                         }
                         break;
                     case SCREEN_STATES.COMP_SCIENCE:
@@ -268,6 +288,7 @@ namespace EscapeTheScreen
                             Me_n_babeWindow.SetActive(false);
                             PacMan_Window.SetActive(false);
                             ReadMe_Window.SetActive(false);
+                            OpenSmthSnd.Play();
                         }
                         break;
                     case SCREEN_STATES.USER_PASSWORD:
@@ -279,6 +300,7 @@ namespace EscapeTheScreen
                             case BUTTONS.CLOSE:
                                 activeScreen = SCREEN_STATES.DESKTOP;
                                 Pass_Window.SetActive(false);
+                                OpenSmthSnd.Play();
                                 break;
                             default:
                                 break;
@@ -294,10 +316,12 @@ namespace EscapeTheScreen
                             case BUTTONS.CLOSE:
                                 activeScreen = SCREEN_STATES.DESKTOP;
                                 Window_User.SetActive(false);
+                                OpenSmthSnd.Play();
                                 break;
                             case BUTTONS.MYSELF:
                                 activeScreen = SCREEN_STATES.MYSELF_OPEN;
                                 Window_Myself.SetActive(true);
+                                OpenSmthSnd.Play();
                                 break;
                             default:
                                 break;
@@ -309,17 +333,20 @@ namespace EscapeTheScreen
                             case BUTTONS.CLOSE:
                                 activeScreen = SCREEN_STATES.USER_FOLDER;
                                 Window_Myself.SetActive(false);
+                                OpenSmthSnd.Play();
                                 break;
                             case BUTTONS.PRINT:
                                 if (printerInstalled)
                                 {
                                     activeScreen = SCREEN_STATES.PICTURE_OPEN;
                                     Window_PrintPicture.SetActive(true);
+                                    OpenSmthSnd.Play();
                                 }
                                 else
                                 {
                                     activeScreen = SCREEN_STATES.PRINTER_NOT_INSTALLED;
                                     Window_PrinterNotInstalled.SetActive(true);
+                                    OpenSmthSnd.Play();
                                 }
                                 break;
                             default:
@@ -331,6 +358,7 @@ namespace EscapeTheScreen
                         {
                             activeScreen = SCREEN_STATES.MYSELF_OPEN;
                             Window_PrinterNotInstalled.SetActive(false);
+                            OpenSmthSnd.Play();
                         }
                         break;
                     case SCREEN_STATES.PICTURE_OPEN:
@@ -339,10 +367,12 @@ namespace EscapeTheScreen
                             case BUTTONS.CLOSE:
                                 activeScreen = SCREEN_STATES.MYSELF_OPEN;
                                 Window_PrintPicture.SetActive(false);
+                                OpenSmthSnd.Play();
                                 break;
                             case BUTTONS.PRINT_PICTURE:
                                 activeScreen = SCREEN_STATES.WON;
-                                Application.OpenURL("http://webexperiments.gr/escapethescreen/won.html");
+                                WonSnd.Play();
+                                Invoke("openWonUrl", 3f);
                                 break;
                             default:
                                 break;
@@ -352,6 +382,14 @@ namespace EscapeTheScreen
                         break;
                 }
             }
+        }
+
+        /// <summary>
+        /// Opens won url! Congrats!
+        /// </summary>
+        private void openWonUrl()
+        {
+            Application.OpenURL("http://webexperiments.gr/escapethescreen/won.html");
         }
 
         private void checkLogInScreenInput()
@@ -382,6 +420,7 @@ namespace EscapeTheScreen
                     activeScreen = SCREEN_STATES.USER_FOLDER;
                     Pass_Window.SetActive(false);
                     Window_User.SetActive(true);
+                    OpenSmthSnd.Play();
                 }
                 else
                 {

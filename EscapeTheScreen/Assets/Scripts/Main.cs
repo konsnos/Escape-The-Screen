@@ -394,6 +394,7 @@ namespace EscapeTheScreen
 
         private void checkLogInScreenInput()
         {
+            inputText.text = inputText.text.ToUpper();
             if(Input.GetKeyUp(KeyCode.Return) || Input.GetKeyUp(KeyCode.KeypadEnter))
             {
                 if (inputText.text == logInPassword)

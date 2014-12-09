@@ -40,12 +40,15 @@ namespace EscapeTheScreen
         private GameObject PacMan_Window;
         [SerializeField]
         private GameObject ReadMe_Window;
+        [SerializeField]
+        private GameObject Pass_Window;
 
         #endregion
 
         /// <summary>
         /// If true then printer is installed.
         /// </summary>
+        [HideInInspector]
         public bool printerInstalled;
 
         #region LOG IN SCREEN VARS
@@ -55,9 +58,17 @@ namespace EscapeTheScreen
         [SerializeField]
         private RectTransform enterBtn;
         [SerializeField]
+        private GameObject LogInHintObj;
+        [SerializeField]
         private string logInPassword = "yellow";
         [SerializeField]
-        private GameObject HintObj;
+        private string userPassword = "PICB";
+        [SerializeField]
+        private string[] hintPasswords = { "OMKO", "CAFS", "APAG", "URSC", "MMMM", "SSBP", "BPIC" };
+        [SerializeField]
+        private Text UserPassText;
+        [SerializeField]
+        private GameObject UserPassHint;
 
         #endregion
 
@@ -119,6 +130,9 @@ namespace EscapeTheScreen
                 case SCREEN_STATES.LOG_IN:
                     checkLogInScreenInput();
                     break;
+                case SCREEN_STATES.USER_PASSWORD:
+                    checkUserPassInput(false);
+                    break;
                 default:
                     break;
             }
@@ -142,6 +156,11 @@ namespace EscapeTheScreen
                             case BUTTONS.UNSORTED:
                                 activeScreen = SCREEN_STATES.UNSORTED;
                                 UnsortedWindow.SetActive(true);
+                                break;
+                            case BUTTONS.USER:
+                                activeScreen = SCREEN_STATES.USER_PASSWORD;
+                                Pass_Window.SetActive(true);
+                                UserPassText.text = "";
                                 break;
                             default:
                                 break;
@@ -229,6 +248,24 @@ namespace EscapeTheScreen
                             ReadMe_Window.SetActive(false);
                         }
                         break;
+                    case SCREEN_STATES.USER_PASSWORD:
+                        switch(IconHandler.selectedBtn)
+                        {
+                            case BUTTONS.OK:
+                                checkUserPassInput(true);
+                                break;
+                            case BUTTONS.CLOSE:
+                                activeScreen = SCREEN_STATES.DESKTOP;
+                                Pass_Window.SetActive(false);
+                                break;
+                            default:
+                                break;
+                        }
+                        if(IconHandler.selectedBtn == BUTTONS.OK)
+                        {
+                            checkUserPassInput(true);
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -245,8 +282,39 @@ namespace EscapeTheScreen
                     ShowDesktopScreen(true);
                 }
                 else
-                    HintObj.SetActive(true);
+                    LogInHintObj.SetActive(true);
             }
+        }
+
+        private void checkUserPassInput(bool check)
+        {
+            UserPassText.text = UserPassText.text.ToUpper();
+
+            if (Input.GetKeyUp(KeyCode.Return) || Input.GetKeyUp(KeyCode.KeypadEnter) || check)
+            {
+                if (UserPassText.text == userPassword)
+                {
+                    UserPassHint.SetActive(false);
+                    Debug.Log("Correct password");
+                }
+                else
+                {
+                    bool showHint = false;
+                    for(byte i = 0;i<hintPasswords.Length;i++)
+                    {
+                        if (UserPassText.text == hintPasswords[i])
+                        {
+                            showHint = true;
+                            break;
+                        }
+                    }
+
+                    UserPassHint.SetActive(showHint);
+                }
+            }
+
+            if (UserPassText.text.Length > 4)
+                UserPassText.text = UserPassText.text.Substring(0, 4);
         }
     }
 }

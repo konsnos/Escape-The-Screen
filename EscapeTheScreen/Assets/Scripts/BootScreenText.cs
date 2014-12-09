@@ -20,6 +20,8 @@ namespace EscapeTheScreen
             clickToContinue = false;
             caretPos = 0;
             screenText = GetComponent<Text>();
+            AudioSource audio = GetComponent<AudioSource>();
+            audio.Play();
             StartCoroutine("typeText");
         }
 

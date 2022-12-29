@@ -1,6 +1,6 @@
-Escape The Screen
-=================
-Game by Happy Transport games for Ludum Dare 31 Jam.
+# Escape The Screen #
+
+Game by Happy Transport games for Ludum Dare 31 Jam (2016).
 
 Ludum Dare url
 http://ludumdare.com/compo/ludum-dare-31/?action=preview&uid=47515

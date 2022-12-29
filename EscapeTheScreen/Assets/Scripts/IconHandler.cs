@@ -24,11 +24,11 @@ namespace EscapeTheScreen
         /// </summary>
         [SerializeField]
         private GameObject windowRef;
-        public GameObject WindowRef { get { return windowRef; } }
+        public GameObject WindowRef => windowRef;
 
         public static BUTTONS selectedBtn;
 
-        void Start()
+        private void Start()
         {
             RectTransform selfT = GetComponent<RectTransform>();
             Vector3 pos = selfT.position;
@@ -39,11 +39,11 @@ namespace EscapeTheScreen
         /// <summary>
         /// Check if hero is over the icon.
         /// </summary>
-        void Update()
+        private void Update()
         {
             if (Main.ActiveScreen == activeForWindow)
             {
-                bool isOver = false;
+                bool isOver;
 
                 if(buttonId == BUTTONS.CLOSE || buttonId == BUTTONS.HINT || buttonId == BUTTONS.PRINT_PICTURE)
                     isOver = Library.RectanglesCollide(HeroController.StaticSelf.GetRect(), selfRect);

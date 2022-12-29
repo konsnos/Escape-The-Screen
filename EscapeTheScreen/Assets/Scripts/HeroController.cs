@@ -44,9 +44,9 @@ namespace EscapeTheScreen
         private AudioSource moveSnd;
         private bool isMoving;
 
-        Vector3 newPos;
+        private Vector3 newPos;
 
-        void Awake()
+        private void Awake()
         {
             StaticSelf = this;
             image = GetComponent<Image>();
@@ -63,7 +63,7 @@ namespace EscapeTheScreen
         }
 
         // Use this for initialization
-        void Start()
+        private void Start()
         {
             printedSprite = 0;
             currentSprite = 0;
@@ -72,7 +72,7 @@ namespace EscapeTheScreen
         }
 
         // Update is called once per frame
-        void Update()
+        private void Update()
         {
             if (controlled)
             {
@@ -211,7 +211,7 @@ namespace EscapeTheScreen
             StartCoroutine("walkAcrossScreen");
         }
 
-        IEnumerator walkAcrossScreen()
+        private IEnumerator walkAcrossScreen()
         {
             while (selfT.anchoredPosition.x - selfT.rect.width / 2f < Main.WIDTH)
             {

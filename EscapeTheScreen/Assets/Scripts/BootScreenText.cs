@@ -15,18 +15,18 @@ namespace EscapeTheScreen
         private bool clickToContinue;
 
         // Use this for initialization
-        void Start()
+        private void Start()
         {
             clickToContinue = false;
             caretPos = 0;
             screenText = GetComponent<Text>();
-            AudioSource audio = GetComponent<AudioSource>();
-            audio.Play();
+            var audioSource = GetComponent<AudioSource>();
+            audioSource.Play();
             StartCoroutine("typeText");
         }
 
         // Update is called once per frame
-        IEnumerator typeText()
+        private IEnumerator typeText()
         {
             while (caretPos < text.Length)
             {
@@ -39,11 +39,14 @@ namespace EscapeTheScreen
             HeroController.StaticSelf.WalkAcrossScreen(200f,-380f);
         }
 
-        void Update()
+        private void Update()
         {
             if(clickToContinue)
             {
-                if(Input.GetKeyUp(KeyCode.Mouse0) || Input.GetKeyUp(KeyCode.Mouse1) || Input.GetKeyUp(KeyCode.Mouse2))
+                var keyUpMouse0 = Input.GetKeyUp(KeyCode.Mouse0);
+                var keyUpMouse1 = Input.GetKeyUp(KeyCode.Mouse1);
+                var keyUpMouse2 = Input.GetKeyUp(KeyCode.Mouse2);
+                if(keyUpMouse0 || keyUpMouse1 || keyUpMouse2)
                 {
                     BootCompleted();
                 }
